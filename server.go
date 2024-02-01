@@ -10,7 +10,7 @@ import (
 	"github.com/mariosoaresreis/go-graphql-jobs/graph"
 )
 
-const defaultPort = "8080"
+const defaultPort = "8083"
 
 func main() {
 	port := os.Getenv("PORT")

@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-var connectionString = "mongodb+srv://marioreis:5gl6cyhiSpxM8Nf3@devconnector.wgdcfm4.mongodb.net/test?retryWrites=true&w=majority"
+var connectionString = "mongodb+srv://marioreis:5gl6cyhiSpxM8Nf3@devconnector.wgdcfm4.mongodb.net/?retryWrites=true&w=majority"
 
 type DB struct {
 	client *mongo.Client
@@ -56,25 +56,29 @@ func (db *DB) GetJob(id string) *model.JobListing {
 	return &jobListing
 }
 
-func (db *DB) GetJobs() []*model.JobListing {
-	jobCollec := db.client.Database("graphql-job-board").Collection("jobs")
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*30)
-	defer cancel()
-	var jobListings []*model.JobListing
-	cursor, err := jobCollec.Find(ctx, bson.D{})
+func (db *DB) GetJobs() []*model.JobListing { /*
+		jobCollec := db.client.Database("graphql-job-board").Collection("jobs")
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*30)
+		defer cancel()
+		var jobListings []*model.JobListing
+		cursor, err := jobCollec.Find(ctx, bson.D{})
 
-	if err != nil {
-		log.Fatal(err)
-	}
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	if err = cursor.All(context.TODO(), &jobListings); err != nil {
-		panic(err)
-	}
+		if err = cursor.All(context.TODO(), &jobListings); err != nil {
+			panic(err)
+		}
 
-	return jobListings
+		return jobListings*/
+	var job = model.JobListing{ID: "1", URL: "www.google.com", Company: "company", Title: "title", Description: "desc"}
+	var jobListing []*model.JobListing
+	jobListing = append(jobListing, &job)
+	return jobListing
 }
 
-func (db *DB) createJobListing(jobInfo model.CreateJobListingInput) *model.JobListing {
+func (db *DB) CreateJobListing(jobInfo model.CreateJobListingInput) *model.JobListing {
 	jobCollec := db.client.Database("graphql-job-board").Collection("jobs")
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*30)
 	defer cancel()
